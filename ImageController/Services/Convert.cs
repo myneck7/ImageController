@@ -12,7 +12,7 @@ namespace ImageController.Services
 {
     public class Convert
     {
-        public static Image ImgToByte(byte[] image, ImageFormat pFormat)
+        public static Image ByteToImg(byte[] image, ImageFormat pFormat)
         {
             try
             {
