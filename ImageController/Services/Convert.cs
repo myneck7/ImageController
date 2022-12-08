@@ -14,12 +14,48 @@ namespace ImageController.Services
     {
         public static Image ImgToByte(byte[] image, ImageFormat pFormat)
         {
-            var imageObject = new Bitmap(new MemoryStream(image));
+            try
+            {
+                if(image == null || image.Length == 0)
+                {
+                    return null;
+                }
 
-            var stream = new MemoryStream();
-            imageObject.Save(stream, pFormat);
+                using (var imageObject = new Bitmap(new MemoryStream(image)))
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        imageObject.Save(stream, pFormat);
 
-            return new Bitmap(stream);
+                        return new Bitmap(stream);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static byte[] ImgToByteArray(Image img)
+        {
+            try
+            {
+                if(img == null)
+                {
+                    return null;
+                }
+
+                using (MemoryStream mStream = new MemoryStream())
+                {
+                    img.Save(mStream, img.RawFormat);
+                    return mStream.ToArray();
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
